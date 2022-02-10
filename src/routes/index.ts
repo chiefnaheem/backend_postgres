@@ -1,9 +1,11 @@
 import express from 'express'
+import { register, login, confirmEmail, logout } from '../controllers/auth';
 const router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req: any, res: any) {
-  res.render('index', { title: 'Express' });
-});
+
+router.post('/', register)
+router.get('/verify/:token', confirmEmail)
+router.post('/login', login)
+router.post('/logout', logout)
 
 export default router;

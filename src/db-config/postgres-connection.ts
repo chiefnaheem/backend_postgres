@@ -1,22 +1,12 @@
 import postgres from "postgres";
 
 
-// export const sql = postgres(process.env.DATABASE_URL as string)
-// const POSTGRES_USER="jpianbrbpkwihg"
-// const POSTGRES_PWD='c58fd191c87003de8a7cc082e368d6a9eb235c0848b2ee62dec9b567b8567d4b'
-// const POSTGRES_DB="dc25ccacrnme7k"
-// const HOST="ec2-54-235-98-1.compute-1.amazonaws.com"
-// const POSTGRES_URL=`postgres://${process.env.DB_USER as string}:${process.env.DB_PASSWORD as string}@${process.env.DB_HOST as string}:5432/${process.env.DB_NAME as string}?sslmode=disable`
-
-
-// const POSTGRES_URL=`postgres://jpianbrbpkwihg:c58fd191c87003de8a7cc082e368d6a9eb235c0848b2ee62dec9b567b8567d4b@ec2-54-235-98-1.compute-1.amazonaws.com:5432/dc25ccacrnme7k?sslmode=disable`
-// export const sql = postgres(POSTGRES_URL)
 export const sql = postgres(process.env.DATABASE_URL as string,{ssl:{rejectUnauthorized:false}})
 
-export async function testConnection(){
+export const testConnection = async () => {
     try {
         const result = await sql`SELECT * FROM users LIMIT 2`
-        console.log('database connected successfully', result)
+        console.log('database connected successfully')
         return 'database connected successfully'
     } catch (error) {
         console.error('database connection failed',error)

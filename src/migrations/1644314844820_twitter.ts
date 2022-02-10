@@ -5,8 +5,9 @@ import { MigrationBuilder, ColumnDefinitions } from 'node-pg-migrate';
 export const shorthands: ColumnDefinitions | undefined = undefined;
 
 export async function up(pgm: MigrationBuilder): Promise<void> {
-    
+
     pgm.createExtension('uuid-ossp', { ifNotExists: true });
+
     pgm.createTable('users', {
         id: {
             type: 'uuid',
@@ -26,9 +27,8 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
             type: 'TEXT',
             notNull: true,
         },
-        isActive: {
-            type: 'TEXT', 
-            default: 'false'
+        isactive: {
+            type: 'TEXT',
         },
         date_created: {
             type: 'timestamp',
@@ -41,25 +41,22 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
             primaryKey: true,
             default: pgm.func('uuid_generate_v4()')
         },
-        userId: {
+        user_id: {
             type: "uuid",
             references: 'users(id)',
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
         },
-        tweetBody: {
+        tweet_body: {
             type: 'TEXT'
         },
         image: {
             type: 'TEXT'
         },
-        whoCanReply: {
+        who_can_reply: {
             type: 'TEXT'
         },
-        cloudinary_id: {
-            type: 'TEXT'
-        },
-        createdAt: {
+        date_created: {
             type: 'timestamp',
             notNull: true,
             default: pgm.func('current_timestamp')
@@ -72,19 +69,22 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
             primaryKey: true,
             default: pgm.func('uuid_generate_v4()')
         },
-        userId: {
+        user_id: {
             type: 'uuid',
             references: 'users(id)',
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE'
         },
-        tweetId: {
+        tweet_id: {
             type: 'uuid',
             references: 'tweets(id)',
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE'
         },
-        createdAt: {
+        content: {
+            type: 'TEXT'
+        },
+        date_created: {
             type: 'timestamp',
             notNull: true,
             default: pgm.func('current_timestamp')
@@ -109,7 +109,7 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE'
         },
-        createdAt: {
+        date_created: {
             type: 'timestamp',
             notNull: true,
             default: pgm.func('current_timestamp')
@@ -118,8 +118,8 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
 }
 
 export async function down(pgm: MigrationBuilder): Promise<void> {
-    pgm.dropTable('users')
-    pgm.dropTable('tweets')
-    pgm.dropTable('likes')
     pgm.dropTable('comments')
+    pgm.dropTable('likes')
+    pgm.dropTable('tweets')
+    pgm.dropTable('users') 
 }

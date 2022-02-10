@@ -3,10 +3,13 @@ import express, {Request, Response, NextFunction} from 'express';
 import path from 'path'
 import cookieParser from 'cookie-parser'
 import logger from 'morgan'
-import dotenv from 'dotenv'
+
 import indexRouter from './routes/index'
+import twitsRouter from './routes/twits'
 import usersRouter from './routes/users'
 import { testConnection } from './db-config/postgres-connection';
+
+testConnection()
 
 const app = express();
 
@@ -20,7 +23,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+app.use('/auth', indexRouter);
+app.use('/twit', twitsRouter)
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler

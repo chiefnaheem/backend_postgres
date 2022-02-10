@@ -7,6 +7,7 @@ require('dotenv').config()
 var app = require('../dist/app')
 var debug = require('debug')('twitt:server');
 var http = require('http');
+// var { testConnection } = require('../src/db-config/postgres-connection.ts')
 
 /**
  * Get port from environment and store in Express.
@@ -20,7 +21,7 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
-testConnection()
+// testConnection()
 /**
  * Listen on provided port, on all network interfaces.
  */
